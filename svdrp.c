@@ -442,6 +442,14 @@ unsigned short cRemoteRecordings::CmdLSTR(const char *Date, const char *Title, u
 					// strip recording length (VDR 1.7.21+)
 					if (isspace(*p) && !isspace(*(p+1)) && sscanf(p, " %*d:%2d%n", &dummy, &len) > 0)
 						p += len;
+
+					// remove new indicator in UTF-8
+					while (!isspace(*p))
+					  p++;
+					// or new indicator in UTF-8: U+E010
+					//if (*p == 0xEE && *(p+1)==0x80 && *(p+2)==0x90)
+					//  p+=3;
+
 					// new indicator
 					if (*p == '*')
 						p++;
